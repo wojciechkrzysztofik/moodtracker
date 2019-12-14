@@ -1,0 +1,124 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "moodtracker API documentation",
+    "version" : "1.0.0",
+    "title" : "moodtracker API",
+    "contact" : {
+      "email" : "info@moodtracker.pl"
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/wkrzysztofik/moodtracker/1.0.0",
+  "tags" : [{
+    "name" : "Auth"
+  }],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/auth/login" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Login user",
+        "description" : "Login user using email and password",
+        "operationId" : "loginUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "in" : "body",
+            "name" : "email",
+            "description" : "User email address",
+            "required" : true,
+            "type": "string"
+          },
+          {
+            "in" : "body",
+            "name" : "password",
+            "description" : "User password",
+            "required" : true,
+            "type": "string"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "{expiresIn, token, email}"
+          },
+          "403" : {
+            "description" : "Email and password are required! || Email or password wrong!"
+          }
+        }
+      }
+    },
+    "/auth/register" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Register user",
+        "description" : "Create account for new user",
+        "operationId" : "createUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [
+          {
+            "in" : "body",
+            "name" : "email",
+            "description" : "User email address",
+            "required" : true,
+            "type": "string"
+          },
+          {
+            "in" : "body",
+            "name" : "password",
+            "description" : "Password string",
+            "required" : true,
+            "type": "string"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns user object",
+            "schema" : {
+              "type" : "object",
+              "$ref": "#/definitions/User"
+            }
+          },
+          "403" : {
+            "description" : "Email exists || Email and password are required!"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "User" : {
+      "type" : "object",
+      "required" : [ "id", "password", "passwordHash", "email" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "password" : {
+          "type" : "boolean",
+          "example" : null
+        },
+        "passwordHash" : {
+          "type" : "string",
+          "example" : "$2b$10$Po4WJu3Np5StHUqr34jksuQ/cYJOCOPOjwQW5Qq87ldPR8U.02otC"
+        },
+        "email" : {
+          "type" : "string",
+          "example" : "info@moodtracker.pl"
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "John"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Doe"
+        }
+      }
+    }
+  }
+}
